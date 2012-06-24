@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip"
+      android:id="@+id/IP_label" />
+      <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="right"
+      android:textSize="20dip"
+      android:id="@+id/command_label" />
+  </LinearLayout>
+   <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip">
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip"
+      android:id="@+id/battery_label" />
+  </LinearLayout>
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip">
+  <Button
+    android:id="@+id/cmd_get"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top" /> 
+  </LinearLayout>
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:padding="10dip">
+    <Button
+      android:id="@+id/cmd_decrement"
+       android:gravity="left"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip" />
+    <TextView
+      android:id="@+id/info_wiev"
+      android:gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip"
+      android:padding="10dip" />
+    <Button
+      android:id="@+id/cmd_increment"
+       android:gravity="right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip" />
+  </LinearLayout>
+  <Button
+    android:id="@+id/cmd_start"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    />
+</LinearLayout>
