@@ -1,5 +1,7 @@
 package ha.homeauto.ver;
 
+import ha_util.HA_utils;
+
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,15 +83,15 @@ public class HomeautoActivity extends Activity implements OnClickListener
         getIface.setOnClickListener(this);
         sendCMD.setOnClickListener(this);
         cmdResultLabel.setOnClickListener(this);
-             
+       
         IMM_string = "192.168.1.4"; 
         cmd_number = 0;
         IP_validation = true;
         
         IPaddrLabel.setText(IMM_string);
         cmdResultLabel.setText("Enter IP from soft keys");
-        inc_cmd_number.setText("+");
-        dec_cmd_number.setText("-");
+        inc_cmd_number.setText(" + ");
+        dec_cmd_number.setText(" - ");
         getIface.setText("Get interface ");
         sendCMD.setText("Send Command");
         commandLabel.setText("Command # " + Integer.toString (cmd_number));
@@ -113,7 +115,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
     {   
         InputMethodManager inputManager = (InputMethodManager) 
             getSystemService(INPUT_METHOD_SERVICE);
-        
+        HA_utils parser  = new HA_utils ();
         if (keyCode == KeyEvent.KEYCODE_BACK) finish();
         if (keyCode == KeyEvent.KEYCODE_0) IMM_string += "0";
         if (keyCode == KeyEvent.KEYCODE_1) IMM_string += "1";
@@ -125,7 +127,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
         if (keyCode == KeyEvent.KEYCODE_7) IMM_string += "7";
         if (keyCode == KeyEvent.KEYCODE_8) IMM_string += "8";
         if (keyCode == KeyEvent.KEYCODE_9) IMM_string += "9";
-        if (keyCode == KeyEvent.KEYCODE_DEL) IMM_string = cutString (IMM_string);
+        if (keyCode == KeyEvent.KEYCODE_DEL) IMM_string = parser.cutString (IMM_string);
         if (keyCode == KeyEvent.KEYCODE_PERIOD) IMM_string += ".";
         IPaddrLabel.setText(IMM_string);
         
@@ -209,7 +211,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
         InetAddress IPAddress = null;
         DatagramPacket receivePacket  = null; 
         boolean UDP_wait = true; 
-       
+        HA_utils parser  = new HA_utils ();
     
         sendCMD.setText("Send Command");
         try 
@@ -285,7 +287,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
         {
             cmdResultLabel.setText("Error 4!");
         };
-      
+        
         while(UDP_wait)
         { 
              receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -305,12 +307,14 @@ public class HomeautoActivity extends Activity implements OnClickListener
             byte [] payload = receivePacket.getData();
             
             int cmd_counter = 0;
-                        
+            
+            cmd_counter = parser.get_List_entries_count (payload, (byte) '|');
+            /*
             for (int i = 0 ; i < payload.length; i++)
        	    {   
                 if ( ('|' == payload [i]) && iface_get) cmd_counter++;
             }       
-                
+            */    
             String sentence = new String(payload);
             
             cmdResultLabel.setText(sentence);
@@ -323,7 +327,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
                 if (cmd_max_number > 0) 
                 {
                     cmdResultLabel.setText("has " + Integer.toString (cmd_max_number) + " commands");
-                    cmd_List = get_cmd_List(sentence, "[|]");
+                    cmd_List = parser.get_cmd_List(sentence, "[|]");
                 }
             }
             else
@@ -347,23 +351,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
         }    
     }
     
-    public String [] get_cmd_List (String inString, String delims)
-    {        
-        String[] tokens = inString.split(delims);
-        return tokens;
-    }
-    
-    public String cutString (String inString)
-    {   
-        if ( inString.length () > 0)
-        {	
-            StringBuilder strB = new StringBuilder(inString);
-           	strB.deleteCharAt(inString.length() - 1);
-            return strB.toString();
-        }
-        else  return "";
-    }
-    
+        
     public boolean validate(String ip)
     {		  
         pattern = Pattern.compile(IPADDRESS_PATTERN); 	  
