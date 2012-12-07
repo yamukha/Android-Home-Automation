@@ -1,6 +1,10 @@
 Android-Home-Automation
 =======================
 
+Update.
+See fork for embedded server based on Atmega32 Ethrenet board:
+https://github.com/yamukha/Embedded-Android-Home-IR-Automation
+=======================
 
 Android and PC based client-server system to home automation
 
