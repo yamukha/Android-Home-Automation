@@ -23,14 +23,15 @@ public class DB_utils extends SQLiteOpenHelper
 	final static int DB_VERSION = 1;
 //	final static String DB_NAME = "mydb.s3db"; 
 //	final static String DB_NAME = "/mnt/sdcard//mydb.db"; // Environment.getExternalStorageDirectory().getPath()
-	final static String DB_PATH = Environment.getExternalStorageDirectory().getPath() ;
-	final static String DB_NAME = "my5.db";
+	final static String DB_PATH = "";
+	//final static String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
+	final static String DB_NAME = "my5.db";	
 	
 	Context context;
 	     
 	public DB_utils (Context context) 
 	{
-	    super(context, DB_PATH +"/" + DB_NAME, null, DB_VERSION);
+	    super(context, DB_PATH + DB_NAME, null, DB_VERSION);
 	    // Store the context for later use
 	    this.context = context;
 	    Log.w (this.getClass().getSimpleName(),SQLselectQuery);	              
