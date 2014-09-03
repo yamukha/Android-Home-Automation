@@ -13,7 +13,7 @@
         android:label="@string/app_name" >
         <activity
             android:name=".LoginActivity"
-            android:label="Register New Account" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +22,7 @@
         
          <!--  Entry for RegisterActivity.class -->
        <activity android:name=".HomeautoActivity"
-                 android:label="f@string/app_name"></activity>
+                 android:label="@string/app_name"></activity>
      
     </application>
     
