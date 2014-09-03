@@ -123,7 +123,8 @@ public class LoginActivity extends Activity implements OnClickListener
 			Log.w ("Trying exit", " ");
 			finish();
 			android.os.Process.killProcess(android.os.Process.myPid());
-			super.onDestroy();    // System.exit(1);
+			super.onDestroy();    
+			System.exit(1);
 		}
 		
 		if(v == bLogin) 
