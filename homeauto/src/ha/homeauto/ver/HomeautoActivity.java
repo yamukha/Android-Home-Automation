@@ -2,26 +2,41 @@ package ha.homeauto.ver;
 
 import ha_util.HA_utils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.io.UnsupportedEncodingException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.net.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View;
-import android.view.View.OnClickListener; 
-import android.view.KeyEvent;
-import android.view.inputmethod.InputMethodManager;
+import db_util.DB_utils;
+import android.util.Base64;
+//import org.apache.commons.codec.digest.DigestUtils;
 
 public class HomeautoActivity extends Activity implements OnClickListener
 {
@@ -38,6 +53,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
     protected Button inc_cmd_number;
     protected Button dec_cmd_number;
     protected Button getIface;
+   // protected Button login;
     protected Button sendCMD;
     protected TextView commandLabel;
     protected TextView IPaddrLabel;
@@ -65,19 +81,25 @@ public class HomeautoActivity extends Activity implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+             
+        //setContentView(R.layout.main);
         setContentView(R.layout.main);
-        
+             
+       
+              
         inc_cmd_number = (Button) findViewById(R.id.cmd_increment);
         dec_cmd_number = (Button) findViewById(R.id.cmd_decrement);
         sendCMD  = (Button) findViewById(R.id.cmd_start);
         getIface = (Button) findViewById(R.id.cmd_get);
+       
         commandLabel = (TextView) findViewById(R.id.command_label);
         batteryLabel = (TextView) findViewById(R.id.battery_label);
         IPaddrLabel = (TextView) findViewById(R.id.IP_label);
         cmdResultLabel = (TextView) findViewById(R.id.info_wiev);
         
      // Setup ClickListeners
-        
+        commandLabel.setOnClickListener(this);
+        inc_cmd_number.setOnClickListener(this);
         inc_cmd_number.setOnClickListener(this);
         dec_cmd_number.setOnClickListener(this);
         getIface.setOnClickListener(this);
@@ -151,6 +173,13 @@ public class HomeautoActivity extends Activity implements OnClickListener
     
     public void onClick(View v)
     {   
+    	if(v == commandLabel) 
+    	{    		
+    		Log.w ("Trying login", " "); 
+    		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(i); 		
+    	}	    	
+    	
         if(v == cmdResultLabel) 
         {
             InputMethodManager inputManager = (InputMethodManager) 
@@ -158,7 +187,8 @@ public class HomeautoActivity extends Activity implements OnClickListener
             inputManager.toggleSoftInput(0, 0);
         }        
         if(v == inc_cmd_number) 
-        {
+        {      
+        	
            if  (cmd_max_number > cmd_number) cmd_number++; 
            commandLabel.setText("Command # " + String.valueOf(cmd_number));
            cmdResultLabel.setText((cmd_List [cmd_number]));
@@ -196,8 +226,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
              }
         }
         
-       // commandLabel.setText(String.valueOf(cmd_number));
-    
+       // commandLabel.setText(String.valueOf(cmd_number));    
     }
     
     public void UDP_send (String IPadr, int command, boolean iface_get)
