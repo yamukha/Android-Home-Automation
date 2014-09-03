@@ -4,7 +4,6 @@ import ha_util.HA_utils;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -13,17 +12,11 @@ import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -34,13 +27,9 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import db_util.DB_utils;
-import android.util.Base64;
-//import org.apache.commons.codec.digest.DigestUtils;
 
 public class HomeautoActivity extends Activity implements OnClickListener
-{
-	
+{	
 	private static final String IPADDRESS_PATTERN = 
 			"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
@@ -81,12 +70,8 @@ public class HomeautoActivity extends Activity implements OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-             
-        //setContentView(R.layout.main);
         setContentView(R.layout.main);
-             
-       
-              
+                               
         inc_cmd_number = (Button) findViewById(R.id.cmd_increment);
         dec_cmd_number = (Button) findViewById(R.id.cmd_decrement);
         sendCMD  = (Button) findViewById(R.id.cmd_start);
@@ -378,8 +363,7 @@ public class HomeautoActivity extends Activity implements OnClickListener
                 cmdResultLabel.setText("Timeout!");
             }
         }    
-    }
-    
+    }    
         
     public boolean validate(String ip)
     {		  
