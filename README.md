@@ -7,8 +7,7 @@ https://github.com/yamukha/Embedded-Android-Home-IR-Automation
 =======================
 
 Android and PC based client-server system to home automation
-
-
+with two (login and main) activities, SQLite and JSON code
 
 Short Guide.
 
