@@ -3,6 +3,7 @@ package db_util;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 public class DB_utils extends SQLiteOpenHelper 
@@ -18,8 +19,8 @@ public class DB_utils extends SQLiteOpenHelper
  
 	final static int DB_VERSION = 1;
     //final static String DB_NAME = "/mnt/sdcard//mydb.db"; // Environment.getExternalStorageDirectory().getPath()
-	final static String DB_PATH = "";
-	//final static String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
+	//final static String DB_PATH = "";
+	final static String DB_PATH = Environment.getExternalStorageDirectory().getPath() + "/";
 	final static String DB_NAME = "my5.db";	
 	
 	Context context;
@@ -53,6 +54,6 @@ public class DB_utils extends SQLiteOpenHelper
 	@Override
 	public void onOpen (SQLiteDatabase db) 
 	{
-		Log.w (this.getClass().getSimpleName(), "was opened: " + DB_PATH +"/" + DB_NAME);
+		Log.w (this.getClass().getSimpleName(), "was opened: " + DB_PATH + DB_NAME);
     }  
 }

@@ -66,12 +66,14 @@ public class LoginActivity extends Activity implements OnClickListener
 	    bExit.setOnClickListener (this);
 	    bLogin.setOnClickListener( this);
 	    bRegister.setOnClickListener( this);
+	    bLogin.requestFocus();
    }
 
 	public void onClick(View v) 
 	{		
 		DB_utils db = new DB_utils (this);
 	    SQLiteDatabase dbRW = db.getWritableDatabase();
+	    
 		
 		if(v == bRegister || v == bLogin) 
 		{
@@ -138,6 +140,7 @@ public class LoginActivity extends Activity implements OnClickListener
 				{	            
 					String decrypted ="";
 					String  userPass = "";
+					boolean isDB = false;
 					 
 					Cursor cursor = dbRW.query(DB_utils.TABLE_NAME,  new String[] {DB_utils.VAL_TITLE }, 
 			                        DB_utils.KEY_TITLE + " = " + "'"+ logIn+"'",  null, null, null, null, null);
@@ -148,11 +151,16 @@ public class LoginActivity extends Activity implements OnClickListener
 					catch (IllegalBlockSizeException e1) {e1.printStackTrace();	}
 					  
 					if (cursor.moveToFirst())     
+					{	
 					   userPass = cursor.getString(0);
-					else 
-					   Log.w ("selectQuery", "no match entry");  
+					   isDB =true;
+					}   
+					else
+					{
+					   Log.w ("selectQuery", "no match entry");
+					}  
 					
-					if ( logIn.startsWith(decrypted) && sBase64.startsWith(userPass) )
+					if ( logIn.startsWith(decrypted) && sBase64.startsWith(userPass) &&  true==isDB)
 					{	        
 					    Intent i = new Intent(getApplicationContext(), HomeautoActivity.class);
 			            startActivity(i);
@@ -179,8 +187,7 @@ public class LoginActivity extends Activity implements OnClickListener
 		}	
 		
 		if(v == bExit) 
-		{
-			Log.w ("Trying exit", " ");
+		{			
 			finish();
 			android.os.Process.killProcess(android.os.Process.myPid());
 			super.onDestroy();    

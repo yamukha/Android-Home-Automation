@@ -162,7 +162,8 @@ public class HomeautoActivity extends Activity implements OnClickListener
     	{    		
     		Log.w ("Trying login", " "); 
     		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(i); 		
+            startActivity(i); 	
+            finish();            
     	}	    	
     	
         if(v == cmdResultLabel) 
