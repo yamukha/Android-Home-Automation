@@ -17,6 +17,8 @@ public class DB_utils extends SQLiteOpenHelper
 	private static final String SQL_CREATE_ENTRIES =
 	    "CREATE TABLE " + TABLE_NAME + " (" + KEY_TITLE + TEXT_TYPE + "," + VAL_TITLE + TEXT_TYPE +   " )";
  
+	public static final String SQL_CHECK_ENTRIES = "SELECT * FROM " + TABLE_NAME + " LIMIT 1";
+		
 	final static int DB_VERSION = 1;
     //final static String DB_NAME = "/mnt/sdcard//mydb.db"; // Environment.getExternalStorageDirectory().getPath()
 	//final static String DB_PATH = "";

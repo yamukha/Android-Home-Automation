@@ -67,6 +67,21 @@ public class LoginActivity extends Activity implements OnClickListener
 	    bLogin.setOnClickListener( this);
 	    bRegister.setOnClickListener( this);
 	    bLogin.requestFocus();
+	    
+	    DB_utils db = new DB_utils (this);
+	    SQLiteDatabase dbRW = db.getWritableDatabase();
+	   	    
+	    Cursor dbCursor = dbRW.rawQuery(DB_utils.SQL_CHECK_ENTRIES,null);
+	    
+	    if (dbCursor .moveToFirst()) 
+	    {
+	    	bRegister.setVisibility(View.INVISIBLE);    
+	    }
+	    //else	           	
+	    
+		dbCursor.close();	
+		db.close();
+	    
    }
 
 	public void onClick(View v) 
@@ -74,7 +89,20 @@ public class LoginActivity extends Activity implements OnClickListener
 		DB_utils db = new DB_utils (this);
 	    SQLiteDatabase dbRW = db.getWritableDatabase();
 	    
-		
+	    //SQL_CHECK_ENTRIES
+	    //Cursor cursor = dbRW.query(DB_utils.TABLE_NAME,  new String[] {DB_utils.VAL_TITLE }, 
+        //        DB_utils.KEY_TITLE + " = " + "'"+ logIn+"'",  null, null, null, null, null);
+	    
+	    Cursor dbCursor = dbRW.rawQuery(DB_utils.SQL_CHECK_ENTRIES,null);
+	    
+	    if (dbCursor .moveToFirst()) 
+	    {
+	    	bRegister.setVisibility(View.GONE);    
+	    }
+	    //else	           	
+	    
+		dbCursor.close();	    
+	    
 		if(v == bRegister || v == bLogin) 
 		{
 			String logIn = etLogin.getText().toString();
